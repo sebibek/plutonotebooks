@@ -1,4 +1,4 @@
-# Pluto Notebooks
+# Pluto Notebook Environments
 
 Deploy notebook servers to yr own binder instances in the cloud.
 
