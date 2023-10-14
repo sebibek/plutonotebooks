@@ -3,11 +3,9 @@ FROM jupyter/base-notebook:latest
 # downgrade jupyter-server
 USER root
 
-RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget libc6 && \
+    apt-get install -y --no-install-recommends wget && \
     apt-get install -y --no-install-recommends build-essential && \
     apt-get install -y --no-install-recommends ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/* 
@@ -15,7 +13,9 @@ RUN apt-get update && \
 #    apt-get install -y --no-install-recommends npm nodejs && \
 
 USER ${NB_USER}
-# non-pip dependencies
+
+RUN pip install --no-cache --upgrade pip && \
+    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
 COPY --chown=${NB_USER}:users ./environment.yml ./environment.yml
