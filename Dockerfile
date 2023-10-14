@@ -4,7 +4,7 @@ FROM jupyter/base-notebook:latest
 USER root
 
 RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server 'jupyter-server<2.0.0' pydub shazamio spotipy tabulate tqdm youtube_dl ffmpeg ffprobe
+    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget ffmpeg ffprobe && \

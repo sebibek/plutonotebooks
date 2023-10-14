@@ -6,3 +6,9 @@ dependencies:
   - jupyterlab-git
   - pip:
       - jupyter-contrib-nbextensions
+      - pydub 
+      - shazamio
+      - spotipy
+      - tabulate
+      - tqdm
+      - youtube_dl
