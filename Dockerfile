@@ -1,15 +1,15 @@
-FROM jupyter/base-notebook:latest
+FROM --platform=linux/amd64 jupyter/base-notebook:latest
 
 # downgrade jupyter-server
 USER root
 
 RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server
+    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget && \
+    apt-get install -y --no-install-recommends wget libc6 && \
     apt-get install -y --no-install-recommends build-essential && \
-    apt-get install -y --no-install-recommends ffmpeg ffprobe \
+    apt-get install -y --no-install-recommends ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 #    apt-get install -y --no-install-recommends npm nodejs && \
@@ -23,11 +23,9 @@ COPY --chown=${NB_USER}:users ./setup.py ./setup.py
 COPY --chown=${NB_USER}:users ./runpluto.sh ./runpluto.sh
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
-COPY --chown=${NB_USER}:users ./combined_trace.jl ./combined_trace.jl
 COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
-RUN jupyter labextension install @jupyterlab/server-proxy && \
-    jupyter lab build && \
+RUN jupyter lab build && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
