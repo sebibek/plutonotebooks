@@ -1,18 +1,9 @@
-# Pluto Notebooks
+# Pluto Notebook Environments
 
-A collection of interactive [Pluto.jl](https://github.com/fonsp/Pluto.jl) notebooks which introduce various statistics topics.
+Deploy notebook servers to yr own binder instances in the cloud using: https://mybinder.org/.
+Start by pasting the url of this repo to create an instance.
 
 ### Notebooks
 
-[Beta](https://mybinder.org/v2/gh/roualdes/plutonotebooks/main?urlpath=pluto/open?path=/home/jovyan/notebooks/beta.jl)
-
-[Binomial](https://mybinder.org/v2/gh/roualdes/plutonotebooks/main?urlpath=pluto/open?path=/home/jovyan/notebooks/binomial.jl)
-
-
-[Central Limit Theorem](https://mybinder.org/v2/gh/roualdes/plutonotebooks/main?urlpath=pluto/open?path=/home/jovyan/notebooks/clt.jl)
-
-
-[Joint, Marginal, Conditional Densities](https://mybinder.org/v2/gh/roualdes/plutonotebooks/main?urlpath=pluto/open?path=/home/jovyan/notebooks/jointmarginalconditionaldensities.jl)
-
-[Normal](https://mybinder.org/v2/gh/roualdes/plutonotebooks/main?urlpath=pluto/open?path=/home/jovyan/notebooks/normal.jl)
+runScript.jl: run arb. python scripts with args
 
