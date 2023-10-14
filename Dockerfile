@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 #    apt-get install -y --no-install-recommends npm nodejs && \
 
-USER ${NB_USER}
+# USER ${NB_USER}
 # non-pip dependencies
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
