@@ -1,6 +1,6 @@
 # Pluto Notebook Environments
 
-Deploy notebook servers to yr own binder instances in the cloud.
+Deploy notebook servers to yr own binder instances in the cloud using: https://mybinder.org/.
 
 ### Notebooks
 
