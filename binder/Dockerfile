@@ -23,7 +23,7 @@ COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
 COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
-RUN jupyter lab build && \
+RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
