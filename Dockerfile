@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 #    apt-get install -y --no-install-recommends npm nodejs && \
 
-# USER ${NB_USER}
+USER ${NB_USER}
 # non-pip dependencies
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
@@ -32,8 +32,6 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
 
-RUN sudo apt-get install -y --no-install-recommends ffmpeg ffprobe
-
 USER root
 
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz && \
@@ -42,7 +40,7 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-
     ln -s /opt/julia-1.9.3/bin/julia /usr/local/bin/julia && \
     rm julia-1.9.3-linux-x86_64.tar.gz
 
-# USER ${NB_USER}
+USER ${NB_USER}
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
