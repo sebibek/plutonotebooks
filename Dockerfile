@@ -4,7 +4,7 @@ FROM --platform=linux/amd64 jupyter/base-notebook:latest
 USER root
 
 RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
+    pip install --no-cache jupyter-server 
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget libc6 && \
