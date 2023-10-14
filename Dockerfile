@@ -4,19 +4,18 @@ FROM jupyter/base-notebook:latest
 USER root
 
 RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server 'jupyter-server<2.0.0'
+    pip install --no-cache jupyter-server
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget && \
     apt-get install -y --no-install-recommends build-essential && \
+    apt-get install -y --no-install-recommends ffmpeg ffprobe \
     apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 #    apt-get install -y --no-install-recommends npm nodejs && \
 
 USER ${NB_USER}
-
 # non-pip dependencies
-RUN apt update && apt install -y --no-install-recommends ffmpeg ffprobe
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
 COPY --chown=${NB_USER}:users ./environment.yml ./environment.yml
@@ -33,13 +32,15 @@ RUN jupyter labextension install @jupyterlab/server-proxy && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
 
+RUN sudo apt-get install -y --no-install-recommends ffmpeg ffprobe
+
 USER root
 
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.5-linux-x86_64.tar.gz && \
-    tar -xvzf julia-1.8.5-linux-x86_64.tar.gz && \
-    mv julia-1.8.5 /opt/ && \
-    ln -s /opt/julia-1.8.5/bin/julia /usr/local/bin/julia && \
-    rm julia-1.8.5-linux-x86_64.tar.gz
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz && \
+    tar -xvzf julia-1.9.3-linux-x86_64.tar.gz && \
+    mv julia-1.9.3 /opt/ && \
+    ln -s /opt/julia-1.9.3/bin/julia /usr/local/bin/julia && \
+    rm julia-1.9.3-linux-x86_64.tar.gz
 
 USER ${NB_USER}
 

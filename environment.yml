@@ -1,6 +1,8 @@
 channels:
   - conda-forge
 dependencies:
+  - ffmpeg
+  - ffprobe
   - python
   - jupyter-server-proxy
   - jupyterlab-git
