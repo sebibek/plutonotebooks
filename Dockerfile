@@ -42,7 +42,7 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-
     ln -s /opt/julia-1.9.3/bin/julia /usr/local/bin/julia && \
     rm julia-1.9.3-linux-x86_64.tar.gz
 
-USER ${NB_USER}
+# USER ${NB_USER}
 
 ENV USER_HOME_DIR /home/${NB_USER}
 ENV JULIA_PROJECT ${USER_HOME_DIR}
