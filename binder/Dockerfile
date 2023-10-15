@@ -23,13 +23,12 @@ COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
 COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
-USER root
-
-RUN jupyter lab build && \
+RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
 
+USER root
 
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz && \
     tar -xvzf julia-1.9.3-linux-x86_64.tar.gz && \
