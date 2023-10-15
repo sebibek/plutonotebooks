@@ -26,7 +26,7 @@ COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
-    sudo rm -rf ~/.cache
+    rm -rf ~/.cache
 
 USER root
 
