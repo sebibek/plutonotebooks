@@ -25,7 +25,7 @@ COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
 USER root
 
-RUN jupyter lab build --dev-build=False --minimize=False && \
+RUN jupyter lab build && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
@@ -46,6 +46,6 @@ WORKDIR ${USER_HOME_DIR}
 
 RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()"
 
-RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
+# RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
 # RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
-RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
+# RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
