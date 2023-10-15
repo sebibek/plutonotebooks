@@ -44,6 +44,6 @@ ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
 
-RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
-# RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
 RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()"
+RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
+RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
