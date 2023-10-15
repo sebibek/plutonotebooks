@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 jupyter/base-notebook:latest
+FROM jupyter/base-notebook:latest
 
 USER root
 
@@ -21,7 +21,7 @@ COPY --chown=${NB_USER}:users ./setup.py ./setup.py
 COPY --chown=${NB_USER}:users ./runpluto.sh ./runpluto.sh
 COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
-COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
+# COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
 RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
@@ -43,7 +43,8 @@ ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
-
 RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()"
+
 RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
-# RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
+RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
+RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
