@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:latest
+FROM --platform=amd64 jupyter/base-notebook:latest
 
 USER root
 
@@ -26,7 +26,7 @@ COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
-    rm -rf ~/.cache
+    sudo rm -rf ~/.cache
 
 USER root
 
@@ -43,7 +43,7 @@ ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
-RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()"
+# RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()"
 
 # RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
 # RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
