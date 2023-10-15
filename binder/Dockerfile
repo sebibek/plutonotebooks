@@ -43,7 +43,7 @@ ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
-RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.instantiate(); GC.gc()"
+RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.instantiate();"
 
 RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
 RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
