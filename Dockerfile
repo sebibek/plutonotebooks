@@ -1,10 +1,6 @@
-FROM --platform=linux/amd64 jupyter/base-notebook:latest
+FROM --platform=amd64 jupyter/base-notebook:latest
 
-# downgrade jupyter-server
 USER root
-
-RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache jupyter-server 
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget libc6 && \
@@ -15,7 +11,9 @@ RUN apt-get update && \
 #    apt-get install -y --no-install-recommends npm nodejs && \
 
 USER ${NB_USER}
-# non-pip dependencies
+
+RUN pip install --no-cache --upgrade pip && \
+    pip install --no-cache jupyter-server 
 
 COPY --chown=${NB_USER}:users ./plutoserver ./plutoserver
 COPY --chown=${NB_USER}:users ./environment.yml ./environment.yml
@@ -25,7 +23,7 @@ COPY --chown=${NB_USER}:users ./Project.toml ./Project.toml
 COPY --chown=${NB_USER}:users ./Manifest.toml ./Manifest.toml
 COPY --chown=${NB_USER}:users ./create_sysimage.jl ./create_sysimage.jl
 
-RUN jupyter lab build && \
+RUN jupyter lab build --dev-build=False --minimize=False && \
     jupyter lab clean && \
     pip install . --no-cache-dir && \
     rm -rf ~/.cache
@@ -45,8 +43,8 @@ ENV JULIA_PROJECT ${USER_HOME_DIR}
 ENV JULIA_DEPOT_PATH ${USER_HOME_DIR}/.julia
 WORKDIR ${USER_HOME_DIR}
 
-RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.resolve(); Pkg.instantiate(); Pkg.precompile()"
+RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.instantiate();"
 
 RUN julia --project=${USER_HOME_DIR} create_sysimage.jl
 RUN julia -J${USER_HOME_DIR}/sysimage.so --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
-RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.precompile()"
+RUN julia --project=${USER_HOME_DIR} -e "import Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile(); GC.gc()"
