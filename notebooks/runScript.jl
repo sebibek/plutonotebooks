@@ -19,14 +19,24 @@ using PlutoUI
 
 # ╔═╡ 9a879df4-8f22-4f41-b6f2-af721c816a49
 begin
-	md"intended as universal python script runner, just paste your path, arg and RUN. In this example, I run my soundcloud->shazam->spotify mix scraper with a single arg"
+	md"intended as universal python script runner, just upload your modules, add args and run."
+end
+
+# ╔═╡ 6f5c4b2d-f403-4eaf-b769-76a1a40f6a93
+@bind file_data PlutoUI.FilePicker()
+
+# ╔═╡ 3cb16943-1f5b-499d-95e6-19d6ca31587d
+if !isnothing(file_data)
+	file = open("script.py", "w")
+	write(file, file_data["data"])
+	close(file)
 end
 
 # ╔═╡ 1d233e40-b125-4fa8-b5b0-5373c905a6db
-@bind path TextField(90, default="/Users/sebi/github/pls/set2idV3.py")
+@bind path TextField(90, default="/path/to/some/neat/script")
 
 # ╔═╡ 8f2cce5e-3c69-4116-b62c-fd2ad89b8dd5
-@bind url TextField(90, default="sc_url")
+@bind url TextField(90, default="arg0")
 
 # ╔═╡ 4a17b010-4423-4ad0-bdcd-6d6d3c688046
 begin
@@ -317,8 +327,10 @@ version = "17.4.0+0"
 
 # ╔═╡ Cell order:
 # ╠═707edd53-34fb-4918-b54d-a879255951d6
-# ╠═9a879df4-8f22-4f41-b6f2-af721c816a49
-# ╟─1d233e40-b125-4fa8-b5b0-5373c905a6db
+# ╟─9a879df4-8f22-4f41-b6f2-af721c816a49
+# ╠═6f5c4b2d-f403-4eaf-b769-76a1a40f6a93
+# ╠═3cb16943-1f5b-499d-95e6-19d6ca31587d
+# ╠═1d233e40-b125-4fa8-b5b0-5373c905a6db
 # ╟─8f2cce5e-3c69-4116-b62c-fd2ad89b8dd5
 # ╟─4a17b010-4423-4ad0-bdcd-6d6d3c688046
 # ╠═ee6712a6-71b4-431a-9710-79908beff350
