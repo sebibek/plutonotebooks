@@ -9,6 +9,7 @@ dependencies:
   - pip:
       - jupyter-contrib-nbextensions
       - pydub 
+      - asyncio
       - shazamio
       - spotipy
       - tabulate
