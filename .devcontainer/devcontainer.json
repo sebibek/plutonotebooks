@@ -1,15 +1,19 @@
 {
   "build": { "dockerfile": "../binder/Dockerfile" },
   "postAttachCommand": {
-    "server": "./runpluto.sh 8501"
+    "server": "conda activate && chmod +x runpluto.sh && ./runpluto.sh 8501"
   },
   "portsAttributes": {
     "8501": {
       "label": "Application",
       "onAutoForward": "openPreview"
+    },
+    "8888": {
+      "label": "Authentication",
+      "onAutoForward": "openPreview"
     }
   },
   "forwardPorts": [
-    8501
+    8501, 8888
   ]
 }
